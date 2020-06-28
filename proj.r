@@ -79,16 +79,20 @@ rankhospital <- function(state1,out,num='best'){
                 return(NA)
         }
         
-        newDF[as.numesric(num),]
+        ans <-newDF[as.numeric(num),]$reason
         
+        bb <- split(relaventDF,relaventDF$reason)
+      
+        bb<-(bb[[as.character(ans)]])$hname
+        return(sort(bb, decreasing = FALSE)[1])
 }
 
 
 rankall <- function(out, num="best"){
         x <- c()
         state2 <- unique(outcome$State)
-        for(i in state2){
-                x <- rbind(x,rankhospital(i,out,num))
+        for(i in sort(state2)){
+                x <- rbind(x,c(rankhospital(as.character(i),out,num),i))
         }
         x<- as.data.frame(x)
         x
